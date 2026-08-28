@@ -17,10 +17,11 @@ export default function Home(){
     if(cleaned && !ingredients.includes(cleaned)){
       setIngredients([...ingredients, cleaned])  //add to ingrdients if clean had not errors and is not already in ingreidnent list
     }
+    setIngredientInput('')  //reset/clear input
   }
 
-  const removeIngredient = () => {
-    
+  const removeIngredient = (item: string) => {  //item has to be a string
+    setIngredients(ingredients.filter((i) => i != item))  //filter/loop through all ingredients, drop when condition is false -> rice != rice
   }
 
   const findRecipes = () => {
