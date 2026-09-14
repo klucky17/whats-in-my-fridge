@@ -3,8 +3,17 @@ import { useState } from 'react';
 export default function Home(){
   const [ingredients, setIngredients] = useState<string[]>([])
   const [ingredientInput, setIngredientInput] = useState('')
-  const [recipes, setRecipes] = useState([])
   const [loading, setLoading] = useState(false)
+
+  //define recipe -> what the recipes from the api contains
+  interface Recipe{
+    id: number
+    title: String
+    image: String
+    usedIngredientCount: number
+    missingIngredientCount: number
+  }
+  const [recipes, setRecipes] = useState<Recipe[]>([])  //an array of recipes
 
   const addIngredient = () => {
     const cleaned = ingredientInput.trim()  //clean out any white/trailing spaces
@@ -68,7 +77,12 @@ export default function Home(){
       >
         {loading ? "Searching..." : "Find Recipes"}  {/*if loading -> searching and button is disabled*/}
       </button>
-      
+
+      {recipes.map((recipe) => (
+        <div key={recipe.id}>
+      ))}
+
     </div>
+    
   )
 }
