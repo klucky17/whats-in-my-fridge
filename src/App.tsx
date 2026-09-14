@@ -5,13 +5,23 @@ export default function Home(){
   const [ingredientInput, setIngredientInput] = useState('')
   const [loading, setLoading] = useState(false)
 
+  //define ingredient -> what each ingredient contains
+  interface Ingredient{
+    id: number
+    name: string
+    amount: number
+    unit: string
+    image: string
+  }
+
   //define recipe -> what the recipes from the api contains
   interface Recipe{
     id: number
-    title: String
-    image: String
-    usedIngredientCount: number
-    missingIngredientCount: number
+    title: string
+    image: string
+    usedIngredients: Ingredient[]
+    unusedIngredients: Ingredient[]
+    missedIngredients: Ingredient[]
   }
   const [recipes, setRecipes] = useState<Recipe[]>([])  //an array of recipes
 
@@ -60,7 +70,7 @@ export default function Home(){
         value = {ingredientInput}
         onChange = {(e) => setIngredientInput(e.target.value)}  //everytime input value is changed, an event object e is received and the text lives in e.target.value
       />
-      <button onClick={addIngredient}>Add Ingredient</button>
+      <button onClick={addIngredient}>Add</button>
 
       {ingredients.map((item) => (  //display each ingredient as a button for if the user wants to remove an ingredient later
         <button 
@@ -78,11 +88,15 @@ export default function Home(){
         {loading ? "Searching..." : "Find Recipes"}  {/*if loading -> searching and button is disabled*/}
       </button>
 
+      {/*display recipes*/}
       {recipes.map((recipe) => (
         <div key={recipe.id}>
+          <img src={recipe.image}></img>
+          <h3>{recipe.title}</h3>
+          <p>Uses {recipe.usedIngredients}, Does not use {recipe.unusedIngredients}</p>
+        </div>
       ))}
 
     </div>
-    
   )
 }
