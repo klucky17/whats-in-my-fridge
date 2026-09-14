@@ -39,4 +39,36 @@ export default function Home(){
       setLoading(false)  //finished searching for recipes
     }
   }
+
+  return(
+    <div>
+      <h1>What's in My Fridge?</h1>
+
+      <input 
+        className="ingredients-input"
+        type = "text"
+        placeholder = "Enter an Ingredient"
+        value = {ingredientInput}
+        onChange = {(e) => setIngredientInput(e.target.value)}  //everytime input value is changed, an event object e is received and the text lives in e.target.value
+      />
+      <button onClick={addIngredient}>Add Ingredient</button>
+
+      {ingredients.map((item) => (  //display each ingredient as a button for if the user wants to remove an ingredient later
+        <button 
+          onClick={() => removeIngredient(item)} 
+          key={item}
+        >
+          {item}
+        </button>  //clicking on the ingredient removes it
+      ))}
+
+      <button 
+        onClick={findRecipes}
+        disabled={loading || ingredients.length === 0}  //disable button if currently finding recipes or there are no ingredients
+      >
+        {loading ? "Searching..." : "Find Recipes"}  {/*if loading -> searching and button is disabled*/}
+      </button>
+      
+    </div>
+  )
 }
