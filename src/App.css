@@ -1,3 +1,26 @@
+.input-row{
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.ingredients-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.ingredient-buttons{
+  background: var(--accent-bg);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+  justify-content: center;
+}
+
 .recipe-card{
   text-align: left;
   display: flex;

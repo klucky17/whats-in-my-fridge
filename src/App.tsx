@@ -28,9 +28,13 @@ export default function Home(){
   const [recipes, setRecipes] = useState<Recipe[]>([])  //an array of recipes
 
   const addIngredient = () => {
-    const cleaned = ingredientInput.trim()  //clean out any white/trailing spaces
-    if(cleaned && !ingredients.includes(cleaned)){
-      setIngredients([...ingredients, cleaned])  //add to ingrdients if clean had not errors and is not already in ingreidnent list
+    const newIngredients = ingredientInput
+      .split(',')  //split ingredients by the comma
+      .map((item) => item.trim())  //clean out any white/trailing spaces
+      .filter((item) => item !== '' && !ingredients.includes(item))  //drop empty entries and duplicates
+    
+      if(newIngredients.length > 0){  //if ingredients exist
+      setIngredients([...ingredients, ...newIngredients])  //add to ingrdients
     }
     setIngredientInput('')  //reset/clear input
   }
@@ -74,30 +78,39 @@ export default function Home(){
     <div>
       <h1>What's in My Fridge?</h1>
 
-      <input 
-        className="ingredients-input"
-        type = "text"
-        placeholder = "Enter an Ingredient"
-        value = {ingredientInput}
-        onChange = {(e) => setIngredientInput(e.target.value)}  //everytime input value is changed, an event object e is received and the text lives in e.target.value
-      />
-      <button onClick={addIngredient}>Add</button>
+      <p>Press enter to add an ingredient. To add more than 1 ingredient separate them with a comma ie. chicken, rice, soy sauce</p>
+      <p>Click on the ingredients below to remove them</p>
 
-      {ingredients.map((item) => (  //display each ingredient as a button for if the user wants to remove an ingredient later
+      <div className="input-row">
+        <input 
+          className="ingredients-input"
+          type = "text"
+          placeholder = "Add Ingredients"
+          value = {ingredientInput}
+          onChange = {(e) => setIngredientInput(e.target.value)}  //everytime input value is changed, an event object e is received and the text lives in e.target.value
+          onKeyDown={(e) => e.key === 'Enter' && addIngredient()}  //enter key to add ingredients
+        />
+
         <button 
-          onClick={() => removeIngredient(item)} 
-          key={item}
+          onClick={findRecipes}
+          disabled={loading || ingredients.length === 0}  //disable button if currently finding recipes or there are no ingredients
         >
-          {item}
-        </button>  //clicking on the ingredient removes it
-      ))}
+          {loading ? "Searching..." : "Find Recipes"}  {/*if loading -> searching and button is disabled*/}
+        </button>
 
-      <button 
-        onClick={findRecipes}
-        disabled={loading || ingredients.length === 0}  //disable button if currently finding recipes or there are no ingredients
-      >
-        {loading ? "Searching..." : "Find Recipes"}  {/*if loading -> searching and button is disabled*/}
-      </button>
+      </div>
+
+      <div className="ingredients-row">
+        {ingredients.map((item) => (  //display each ingredient as a button for if the user wants to remove an ingredient later
+          <button
+            className = "ingredient-buttons"
+            onClick={() => removeIngredient(item)} 
+            key={item}
+          >
+            {item}
+          </button>  //clicking on the ingredient removes it
+        ))}
+      </div>
 
       {/*display recipes*/}
       {recipes.map((recipe) => (
