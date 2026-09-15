@@ -1,13 +1,13 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
+  --text: #333333;
+  --text-h: #000000;
+  --bg: #ffffff;
+  --border: #cce5ff;
+  --code-bg: #e6f2ff;
+  --accent: #2196f3;
+  --accent-bg: rgba(33, 150, 243, 0.1);
+  --accent-border: rgba(33, 150, 243, 0.5);
+  --social-bg: rgba(230, 242, 255, 0.5);
   --shadow:
     rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
 
@@ -29,7 +29,7 @@
     font-size: 16px;
   }
 }
-
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -49,13 +49,13 @@
     filter: invert(1) brightness(2);
   }
 }
-
+*/
 #root {
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
-  border-inline: 1px solid var(--border);
+  /*border-inline: 1px solid var(--border);*/
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -95,17 +95,25 @@ p {
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
+input{
   color: var(--text-h);
+  background: var(--bg);
+  font-size: 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+button{
+  background: var(--accent);
+  font-size: 16px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
 }
