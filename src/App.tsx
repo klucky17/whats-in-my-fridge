@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './App.css';
 
 export default function Home(){
   const [ingredients, setIngredients] = useState<string[]>([])
@@ -59,6 +60,14 @@ export default function Home(){
     }
   }
 
+  const getRecipeLink = (title: string, id: number) => {
+    //slug = url friendly text string ie. apple peach strudal -> apple-peach-strudal
+    //+ = if there is consecutive not a-z or 0-9 replace with only 1 '-'
+    //g = global flag -> replace all in the link dont stop at only one
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-')  //if character is not a-z or 0-9 replace with '-'
+    return `https://spoonacular.com/recipes/${slug}-${id}`  //id = number assigned to each recipe
+  }
+
   return(
     <div>
       <h1>What's in My Fridge?</h1>
@@ -90,10 +99,33 @@ export default function Home(){
 
       {/*display recipes*/}
       {recipes.map((recipe) => (
-        <div key={recipe.id}>
-          <img src={recipe.image}></img>
-          <h3>{recipe.title}</h3>
-          <p>Uses {recipe.usedIngredients}, Does not use {recipe.unusedIngredients}</p>
+        <div key={recipe.id} className="recipe-card">
+          <img src={recipe.image} className="recipe-img"></img>
+          
+          <div className="recipe-details">
+            <h3>{recipe.title}</h3>
+            
+            <p>Uses:{" "}
+              {recipe.usedIngredients.map((ingredient) => ingredient.name).join(", ")}
+            </p>
+
+            <p>Unused:{" "}
+              {recipe.unusedIngredients.map((ingredient) => ingredient.name).join(", ")}
+            </p>
+
+            <p>Missing:{" "}
+              {recipe.missedIngredients.map((ingredient) => ingredient.name).join(", ")}
+            </p>
+
+            <a className="recipe-link"
+                    href={getRecipeLink(recipe.title, recipe.id)} 
+                    target="_blank"  //open link in a new browser tab
+                    rel="noopener noreferrer">  {/*make tab have no access to home page*/}
+              View Full Recipe
+            </a>
+
+          </div>
+
         </div>
       ))}
 
