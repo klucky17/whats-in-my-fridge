@@ -20,6 +20,7 @@ export default function Home(){
     id: number
     title: string
     image: string
+    likes: number
     usedIngredients: Ingredient[]
     unusedIngredients: Ingredient[]
     missedIngredients: Ingredient[]
@@ -50,7 +51,8 @@ export default function Home(){
         `http://localhost:3000/recipes?ingredients=${ingredients.join(',')}`
       )
       const data = await response.json()  //get the recipes data as a json
-      setRecipes(data)  //get the recipes fetched with the inputed ingredients
+      const sortedData = [...data].sort((a, b) => b.likes - a.likes)  //sort by highest likes
+      setRecipes(sortedData)  //get the recipes fetched with the inputed ingredients
     
     }catch(error){
       console.error("Failed to find recipes: ", error)  //display error
