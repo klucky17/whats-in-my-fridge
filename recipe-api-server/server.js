@@ -19,7 +19,7 @@ app.get('/recipes', async (req, res) => {  //a route to get requests to recipes,
         //encodeURIComponent -> special charaters ie , . are safely formatted for a url
         //process.env.SPOONACULAR_API_KEY -> get the api key from .env
         const url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=
-                    ${encodeURIComponent(ingredients)}&number=10&apiKey=${process.env.SPOONACULAR_API_KEY}`
+                    ${encodeURIComponent(ingredients)}&number=20&apiKey=${process.env.SPOONACULAR_API_KEY}`  //find 20 recipes
         
         const response = await fetch(url)  //wait for res from api after requesting
         const data = await response.json()  //get the data as a json -> convert raw text to usable js object/array
